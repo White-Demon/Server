@@ -13,9 +13,11 @@ import ru.server.core.Server;
  */
 public class Command   {
 	
+	private Server serv;
+	
 	public Command(Server s)
 	{ 
-		
+		serv = s;
 	}
 	/**
 	 * Читаем комманду и возращаем
@@ -38,7 +40,9 @@ public class Command   {
 		}
 		return command;
 	}
-	
+	/**
+	 * Читаем и исполняем команды
+	 */
 	public void run()
 	{
 		if(readCommand() != null )

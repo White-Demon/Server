@@ -16,6 +16,10 @@ public class User extends Thread{
 	private Socket soc;
     private BufferedReader data_in;
     private PrintWriter data_out;
+    
+    private String nick = "";
+    private String pass = ""; 
+    
     /**
      * Конструктор
      * @param soc - Сокет пользователя
@@ -26,6 +30,8 @@ public class User extends Thread{
     	this.setSocket(soc);
         setData_in(new BufferedReader(new InputStreamReader(soc.getInputStream())));
         setData_out(new PrintWriter(soc.getOutputStream()));
+        
+        
     }
     
     @Override
@@ -33,7 +39,7 @@ public class User extends Thread{
     {
     	while(true)
     	{
-    		if(soc.isConnected())
+    		if(getSocket().isConnected())
     		{
     			try {
 					System.out.println("Message For User:" + data_in.readLine());
@@ -75,5 +81,13 @@ public class User extends Thread{
 	{
 		this.data_in = data_in;
 	}
+
+	public String getNick() {return nick;}
+
+	public void setNick(String nick) {this.nick = nick;}
 	
+	public void authorize()
+	{
+		
+	}
 }
