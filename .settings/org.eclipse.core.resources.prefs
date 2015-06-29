@@ -1,0 +1,8 @@
+eclipse.preferences.version=1
+encoding//src/ru/server/cmd/Command.java=UTF-8
+encoding//src/ru/server/core/Server.java=UTF-8
+encoding//src/ru/server/core/User.java=UTF-8
+encoding//src/ru/server/main/Main.java=UTF-8
+encoding//src/ru/server/xml/Message.java=UTF-8
+encoding//src/ru/server/xml/XMLGeneric.java=UTF-8
+encoding//src/ru/server/xml/XMLParser.java=UTF-8
