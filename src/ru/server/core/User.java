@@ -6,6 +6,10 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+import ru.server.xml.Message;
+import ru.server.xml.XMLGeneric;
+import ru.server.xml.XMLParser;
+
 /**
  * 
  * @author White2Demon
@@ -42,15 +46,56 @@ public class User extends Thread{
     		if(getSocket().isConnected())
     		{
     			try {
-					System.out.println("Message For User:" + data_in.readLine());
-					data_out.append("YES MESSAGE");
-					data_out.flush();
+    				Message msg =XMLParser.getMessageFromXML(data_in.readLine());
+					getMessage(Integer.parseInt(msg.get("type")),msg); // Парсим тип сообщения и передаем его дальше
 				} catch (IOException e) {
 					// No message
 				}
     		}
     	}
     }
+    
+    public void sendMessage(String message)
+    {
+    	data_out.append(message);
+    	data_out.flush();
+    }
+    
+    public void getMessage(int type,Message msg)
+    {
+    	String[] arr = msg.get("message").split(":");
+    	switch(type)
+    	{
+    		case 10:
+    			String login=arr[0],pass=arr[1];
+    			if(isAuth(login,pass))
+    			{
+    				// Вернем XML с Token'ом
+    			}else{
+    				// Вернем ошибку авторизации
+    			}
+    			break;
+    		case 12:
+    			// send message to chat
+    			break;
+    		case 14:
+    			// register new user
+    			break;
+    		case 16:
+    			// a test code
+    			
+    			data_out.append( new XMLGeneric(17,"Удачная передача данных").toString());
+    			data_out.flush();
+    			break;
+    			
+    	}
+    }
+    
+     public boolean isAuth(String login , String pass)
+     {
+		return false;
+     }
+    
     // Геттеры и сеттеры
 	public Socket getSocket() 
 	{

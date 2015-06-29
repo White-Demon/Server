@@ -46,4 +46,9 @@ public class Server extends ServerSocket{
 		}
 	}
 	
+	public void sendMessage(String login,String message)
+	{
+		
+	}
+	
 }
