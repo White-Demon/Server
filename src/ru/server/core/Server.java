@@ -4,17 +4,41 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.HashMap;
 
-import ru.server.cmd.Command;
+import ru.tec.api.ServerListener;
 /**
  * 
  * @author White2Demon
- *
+ * Ядро сервера
  */
 public class Server extends ServerSocket{
-
-	private Command cmd; 
 	
 	private HashMap<String,User> activeUser = new HashMap<>();
+	
+	private ServerListener listener = new ServerListener()
+	{
+		@Override
+		public void newUser(Server server) {
+			User us;
+			System.out.println("Ждем нового пользователя");
+			try {
+				us = new User(server.accept(),server);
+				us.start();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		// Данные методы пока что не нужны ...
+		@Override
+		public void stop() {
+			
+		}
+
+		@Override
+		public void restart() {
+			
+		}
+		
+	};
 	
 	/**
 	 * Конструктор
@@ -30,25 +54,29 @@ public class Server extends ServerSocket{
 	 */
 	public void start()
 	{
-		User us;
-		System.out.println("Запущен");
-		System.out.println("Можете ввести команду");
-		cmd = new Command(this);
+		System.out.println("Сервер запущен");
 		while(true)
 		{
-			try {
-				us = new User(this.accept());
-				us.start();
-				activeUser.put(us.getNick(), us);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			this.listener.newUser(this);
 		}
 	}
-	
+	/**
+	 * Отправляем определенному пользователю сообщение 
+	 * @param login - логин 
+	 * @param message - сообщение
+	 */
 	public void sendMessage(String login,String message)
 	{
-		
+		activeUser.get(login).sendMessage(message); 
 	}
 	
+	public HashMap<String,User> getUsers()
+	{
+		return activeUser;
+	}
+	
+	public void setServerListener(ServerListener sl)
+	{
+		this.listener = sl;
+	}
 }

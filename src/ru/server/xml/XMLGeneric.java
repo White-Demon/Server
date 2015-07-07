@@ -24,7 +24,7 @@ public class XMLGeneric {
 	@Override
 	public String toString()
 	{
-		return "<Server> <type>"+type+"</type><message>"+message+"</message><time>"+(c.get(Calendar.HOUR) + 1 ) + ":" + c.get(Calendar.MINUTE)+"</time></Server>";
+		return "<Server> <type>"+type+"</type><message>"+message+"</message><time>"+(c.get(Calendar.HOUR)  ) + ":" + c.get(Calendar.MINUTE)+"</time></Server>";
 	}
 	
 }
